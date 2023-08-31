@@ -1,0 +1,150 @@
+using System;
+using System.Collections.Generic;
+
+class Pet
+{
+    public string Nickname { get; set; }
+    public int Age { get; set; }
+    public string Gender { get; set; }
+    public int Energy { get; set; }
+    public double Price { get; set; }
+    public int MealQuantity { get; set; }
+
+    public virtual void Eat()
+    {
+        Energy += MealQuantity * 10;
+    }
+
+    public void Sleep()
+    {
+        Energy = 100;
+    }
+
+    public virtual void Play()
+    {
+        if (Energy >= 20)
+        {
+            Energy -= 20;
+        }
+        else
+        {
+            Console.WriteLine($"{Nickname} doesn't have enough energy to play.");
+        }
+    }
+}
+
+class Cat : Pet
+{
+    public Cat(string nickname, int age, string gender)
+    {
+        Nickname = nickname;
+        Age = age;
+        Gender = gender;
+        Energy = 50;
+        Price = 100;
+        MealQuantity = 2;
+    }
+
+    public override void Play()
+    {
+        if (Energy >= 10)
+        {
+            Energy -= 10;
+            Price *= 1.1;
+        }
+        else
+        {
+            Console.WriteLine($"{Nickname} doesn't have enough energy to play.");
+        }
+    }
+}
+
+class Dog : Pet
+{
+    public Dog(string nickname, int age, string gender)
+    {
+        Nickname = nickname;
+        Age = age;
+        Gender = gender;
+        Energy = 70;
+        Price = 150;
+        MealQuantity = 3;
+    }
+}
+
+class Bird : Pet
+{
+    public Bird(string nickname, int age, string gender)
+    {
+        Nickname = nickname;
+        Age = age;
+        Gender = gender;
+        Energy = 40;
+        Price = 50;
+        MealQuantity = 1;
+    }
+}
+
+class Fish : Pet
+{
+    public Fish(string nickname, int age, string gender)
+    {
+        Nickname = nickname;
+        Age = age;
+        Gender = gender;
+        Energy = 30;
+        Price = 30;
+        MealQuantity = 1;
+    }
+}
+
+class PetShop
+{
+    public List<Cat> Cats { get; set; }
+    public List<Dog> Dogs { get; set; }
+    public List<Bird> Birds { get; set; }
+    public List<Fish> Fishes { get; set; }
+
+    public PetShop()
+    {
+        Cats = new List<Cat>();
+        Dogs = new List<Dog>();
+        Birds = new List<Bird>();
+        Fishes = new List<Fish>();
+    }
+
+    public void RemoveByNickname(string nickname)
+    {
+        Cats.RemoveAll(cat => cat.Nickname == nickname);
+        Dogs.RemoveAll(dog => dog.Nickname == nickname);
+        Birds.RemoveAll(bird => bird.Nickname == nickname);
+        Fishes.RemoveAll(fish => fish.Nickname == nickname);
+    }
+
+    public double CalculateTotalValue()
+    {
+        double totalValue = 0;
+
+        foreach (var cat in Cats)
+        {
+            totalValue += cat.Price;
+        }
+
+        foreach (var dog in Dogs)
+        {
+            totalValue += dog.Price;
+        }
+
+        foreach (var bird in Birds)
+        {
+            totalValue += bird.Price;
+        }
+
+        foreach (var fish in Fishes)
+        {
+            totalValue += fish.Price;
+        }
+
+        return totalValue;
+    }
+}
